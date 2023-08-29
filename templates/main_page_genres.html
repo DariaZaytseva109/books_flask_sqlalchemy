@@ -10,7 +10,7 @@
 <ul>
     <li> No: {{ genre.genre_id }}. </li>
     <li> Название жанра: {{ genre.genre }}. </li>
-    <li> Книги жанра: {{ genre.books_of_genre.title }}. </li>
+    <li> <a href=" {{ url_for('list_books_by_genre', genre_id=genre.genre_id) }} "> Книги жанра </a> </li>
 </ul>
 <hr>
 {%- endfor %}

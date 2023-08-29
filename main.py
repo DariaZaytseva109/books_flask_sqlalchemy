@@ -47,7 +47,8 @@ def list_genres():
 @app.route(GENRE_API_ROOT + '/<genre_id>/')
 def list_books_by_genre(genre_id):
     '''список всех книг данного жанра'''
-    pass
+    genre = Genre.query.get_or_404(genre_id)
+    return render_template('genre_page.html', genre_name=genre.genre, books=genre.books_of_genre)
 
 
 

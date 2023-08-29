@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title> {{ genre_name }} </title>
 </head>
 <body>
 
+<h1> Книги жанра {{ genre_name }} </h1>
+{%- for book in books %}
+<ul>
+    <li> Название: {{ book.title }}. </li>
+    <li> Автор: {{ book.author }}. </li>
+
+</ul>
+<hr>
+{%- endfor %}
 </body>
+
 </html>

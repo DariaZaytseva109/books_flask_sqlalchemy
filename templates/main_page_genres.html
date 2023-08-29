@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Жанры</title>
+</head>
+<body>
+<h1> Жанры </h1>
+{%- for genre in genres %}
+<ul>
+    <li> No: {{ genre.genre_id }}. </li>
+    <li> Название жанра: {{ genre.genre }}. </li>
+</ul>
+<hr>
+{%- endfor %}
+</body>
+</html>

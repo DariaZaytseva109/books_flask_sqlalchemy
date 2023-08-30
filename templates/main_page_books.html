@@ -8,17 +8,22 @@
 <h1> Книги </h1>
 {%- for book in books %}
 <ul>
+    <form>
     <li> Название: {{ book.title }}. </li>
     <li> Автор: {{ book.author }}. </li>
     <li> <a href=" {{ url_for('list_books_by_genre', genre_id=book.genre_id) }} "> Жанр: {{ book.genre_name }}. </a> </li>
     <li> Добавлена: {{ book.date_added }}. </li>
-        <div class="checkbox">
-        <input type="checkbox" id="click">
+
+        <input type="checkbox" name="is_read" {% if book.is_read %} checked{% endif %} >
         <label for="click" class="text"> Прочитана </label>
-        </div>
+
     <button type="submit" name="save">Сохранить</button>
+        </form>
 </ul>
 <hr>
 {%- endfor %}
+
+<a href=" {{ url_for('list_genres') }} "> К списку жанров  </a>
+
 </body>
 </html>

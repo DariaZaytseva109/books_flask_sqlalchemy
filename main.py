@@ -1,7 +1,5 @@
 from datetime import date
-
-from flask import Flask, render_template
-
+from flask import Flask, render_template, request
 from model import Book, Genre, db
 
 API_ROOT = '/api/v1'
@@ -17,7 +15,7 @@ with app.app_context():
     db.drop_all()
     db.create_all()
 
-    db.session.add(Book(id=1, title='Мастер и Маргарита', author='М. Булгаков', genre_id=1, date_added = date(2022, 5, 5)))
+    db.session.add(Book(id=1, title='Мастер и Маргарита', author='М. Булгаков', genre_id=1, date_added = date(2022, 5, 5), is_read=True))
     db.session.add(Book(id=2, title='Три товарища', author='Э.М. Ремарк', genre_id=1))
     db.session.add(Book(id=3, title='Герой нашего времени', author='М. Лермонтов', genre_id=1))
     db.session.add(Book(id=4, title='Стихи', author='А. Пушкин', genre_id=2, date_added=date(2020, 1, 1)))
@@ -32,7 +30,7 @@ with app.app_context():
 
 
 
-@app.route(BOOK_API_ROOT)
+@app.route(BOOK_API_ROOT, methods=["GET"])
 def list_books():
     '''view главной страницы приложения, который выводит 15 последних записей из Book в порядке создания - новые записи вверху списка'''
     books = Book.query.order_by(Book.date_added.desc()).limit(LIMIT).all()

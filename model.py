@@ -13,6 +13,7 @@ class Book(db.Model):
     genre_id = db.Column(db.Integer, db.ForeignKey('genre.genre_id', ondelete='SET NULL'))
     genre_name = relationship('Genre', back_populates='books_of_genre')
     date_added = db.Column(db.Date, default=date.today())
+    is_read = db.Column(db.Boolean, default=False)
 
 
     def __repr__(self):

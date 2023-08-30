@@ -12,6 +12,11 @@
     <li> Автор: {{ book.author }}. </li>
     <li> <a href=" {{ url_for('list_books_by_genre', genre_id=book.genre_id) }} "> Жанр: {{ book.genre_name }}. </a> </li>
     <li> Добавлена: {{ book.date_added }}. </li>
+        <div class="checkbox">
+        <input type="checkbox" id="click">
+        <label for="click" class="text"> Прочитана </label>
+        </div>
+    <button type="submit" name="save">Сохранить</button>
 </ul>
 <hr>
 {%- endfor %}

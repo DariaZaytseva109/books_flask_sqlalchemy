@@ -7,7 +7,7 @@ from model import Book, Genre, db
 API_ROOT = '/api/v1'
 BOOK_API_ROOT = API_ROOT + '/book/'
 GENRE_API_ROOT = API_ROOT + '/genre/'
-LIMIT = 3
+LIMIT = 5
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
@@ -23,8 +23,10 @@ with app.app_context():
     db.session.add(Book(id=4, title='Стихи', author='А. Пушкин', genre_id=2, date_added=date(2020, 1, 1)))
     db.session.add(Book(id=5, title='Гордость и предубеждение', author='Д. Остин', genre_id=1, date_added=date(2021, 10, 5)))
     db.session.add(Book(id=6, title='Стихи детям', author='А. Барто', genre_id=2, date_added=date(2023, 7, 9)))
+    db.session.add(Book(id=7, title='Гарри Поттер и философский камень', author='Д. Роулинг', genre_id=3, date_added=date(2023, 2, 2)))
     db.session.add(Genre(genre_id=1, genre='Роман'))
     db.session.add(Genre(genre_id=2, genre='Стихи'))
+    db.session.add(Genre(genre_id=3, genre='Фэнтези'))
     db.session.commit()
 
 

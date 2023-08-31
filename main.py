@@ -5,7 +5,7 @@ from model import Book, Genre, db
 API_ROOT = '/api/v1'
 BOOK_API_ROOT = API_ROOT + '/book/'
 GENRE_API_ROOT = API_ROOT + '/genre/'
-LIMIT = 5
+LIMIT = 6
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
@@ -35,6 +35,26 @@ def list_books():
     '''view главной страницы приложения, который выводит 15 последних записей из Book в порядке создания - новые записи вверху списка'''
     books = Book.query.order_by(Book.date_added.desc()).limit(LIMIT).all()
     return render_template('main_page_books.html', books=books)
+
+
+
+@app.route(BOOK_API_ROOT + '<book_id>/', methods = ['POST', 'GET'])
+def book_page(book_id):
+    '''Страница книги'''
+    book = Book.query.get_or_404(book_id)
+    if request.method == 'POST' and request.form['save'] == 'confirmed':
+        try:
+            print(request.form)
+            print(request.form['is_read'])
+            print(request.form['save'])
+            if request.form['is_read']:
+             book.is_read = True
+             print(book.id, book.is_read)
+        except:
+            book.is_read = False
+
+        db.session.commit()
+    return render_template('book_page.html', book=book)
 
 
 

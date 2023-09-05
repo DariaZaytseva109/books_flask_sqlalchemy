@@ -7,7 +7,7 @@ db = SQLAlchemy()
 
 
 class Book(db.Model):
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     title = db.Column(db.String)
     author = db.Column(db.String(30))
     genre_id = db.Column(db.Integer, db.ForeignKey('genre.genre_id', ondelete='SET NULL'))
@@ -21,7 +21,7 @@ class Book(db.Model):
 
 
 class Genre(db.Model):
-    genre_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    genre_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     genre = db.Column(db.String(30), nullable=False)
     books_of_genre = relationship('Book', back_populates='genre_name')
 

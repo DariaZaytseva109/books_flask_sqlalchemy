@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить</title>
+
+</head>
+<body>
+<h1> Добавить новую книгу </h1>
+{% block content %}
+    <form method="post">
+<p>    <label> Название: </label> <input type="text" name="title" />
+<p>    <label> Автор:     </label> <input type="text" name="author" />
+<p>    <label> Жанр (id): </label> <input type="text" name="genre" />
+
+<br>
+        <br>
+        <button type="submit" name="save" value="confirmed">Сохранить</button>
+
+     <h4> Список жанров c id </h4>
+{%- for genre in genre_list %}
+ {{ genre.genre_id }} - {{ genre.genre }}
+        <br>
+    {%- endfor  %}
+    </form>
+{% endblock %}
+<hr>
+
+<a href=" {{ url_for('list_books') }} "> К списку книг  </a>
+<br>
+<a href=" {{ url_for('list_genres') }} "> К списку жанров  </a>
+
+
+
+
+</body>
+</html>

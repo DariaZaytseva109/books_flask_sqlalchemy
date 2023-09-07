@@ -66,6 +66,16 @@ def list_genres():
     return render_template('main_page_genres.html', genres=genres)
 
 
+@app.route(GENRE_API_ROOT + '/add/', methods=["GET", "POST"])
+def add_genre():
+    '''Добавление нового жанра'''
+    if request.method == "POST":
+        print(request.form)
+        genre = request.form['new_genre']
+        new_genre = Genre(genre=genre)
+        db.session.add(new_genre)
+        db.session.commit()
+    return render_template('add_genre.html')
 
 @app.route(GENRE_API_ROOT + '/<genre_id>/')
 def list_books_by_genre(genre_id):

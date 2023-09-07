@@ -1,10 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Добавить</title>
+
 </head>
 <body>
-$END$
+<h1> Добавить новый жанр </h1>
+{% block content %}
+    <form method="post">
+<p>    <label> Название жанра: </label> <input type="text" name="new_genre" />
+        <br>
+        <button type="submit" name="save" value="confirmed">Сохранить</button>
+
+
+    </form>
+{% endblock %}
+<hr>
+
+<a href=" {{ url_for('list_books') }} "> К списку книг  </a>
+<br>
+<a href=" {{ url_for('list_genres') }} "> К списку жанров  </a>
+
+
+
+
 </body>
 </html>

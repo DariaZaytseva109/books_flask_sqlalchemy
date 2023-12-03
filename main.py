@@ -20,11 +20,13 @@ def list_books():
     '''view главной страницы,
     который выводит 15 последних записей в порядке создания'''
     books = Book.query.order_by(Book.date_added.desc()).limit(LIMIT).all()
-    return render_template('main_page_books.html', books=books)
+    title = 'Книги'
+    return render_template('main_page_books.html', books=books, title=title)
 
 
 @app.route(BOOK_API_ROOT + '/add/', methods=["GET", "POST"])
 def add_book():
+    title = 'Добавить книгу'
     '''Добавление новой книги'''
     if request.method == "POST":
         print(request.form)
@@ -43,7 +45,8 @@ def add_book():
     genre_list = Genre.query.all()
     return render_template(
         'add_book.html',
-        genre_list=genre_list
+        genre_list=genre_list,
+        title=title
     )
 
 
@@ -51,6 +54,7 @@ def add_book():
 def book_page(book_id):
     '''Страница книги'''
     book = Book.query.get_or_404(book_id)
+    title = f'Книга {book.title}'
     if request.method == 'POST' and request.form['save'] == 'confirmed':
         try:
             print(request.form)
@@ -63,18 +67,20 @@ def book_page(book_id):
             book.is_read = False
 
         db.session.commit()
-    return render_template('book_page.html', book=book)
+    return render_template('book_page.html', book=book, title=title)
 
 
 @app.route(GENRE_API_ROOT)
 def list_genres():
     '''список всех жанров'''
     genres = Genre.query.all()
-    return render_template('main_page_genres.html', genres=genres)
+    title = 'Жанры'
+    return render_template('main_page_genres.html', genres=genres, title=title)
 
 
 @app.route(GENRE_API_ROOT + '/add/', methods=["GET", "POST"])
 def add_genre():
+    title = 'Добавить жанр'
     '''Добавление нового жанра'''
     if request.method == "POST":
         print(request.form)
@@ -84,17 +90,18 @@ def add_genre():
         new_genre = Genre(genre=genre)
         db.session.add(new_genre)
         db.session.commit()
-    return render_template('add_genre.html')
+    return render_template('add_genre.html', title=title)
 
 
 @app.route(GENRE_API_ROOT + '/<genre_id>/')
 def list_books_by_genre(genre_id):
     '''список всех книг данного жанра'''
+    title = 'Жанры'
     genre = Genre.query.get_or_404(genre_id)
     return render_template(
         'genre_page.html',
         genre_name=genre.genre,
-        books=genre.books_of_genre
+        books=genre.books_of_genre, title=title
     )
 
 

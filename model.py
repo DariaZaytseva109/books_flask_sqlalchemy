@@ -33,7 +33,7 @@ class Book(db.Model):
 class Genre(db.Model):
     genre_id = db.Column(
         db.Integer,
-        rimary_key=True,
+        primary_key=True,
         nullable=False,
         autoincrement=True
     )

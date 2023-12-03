@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Книги</title>
-</head>
+{% extends 'base.html' %}
+{% block content %}
+
 <body>
-<h1> Книги </h1>
-{%- for book in books %}
+<h1> {{ title }} </h1>
+{% for book in books %}
 <ul>
     <form>
     <li> <a href=" {{ url_for('book_page', book_id=book.id) }} "> Название: {{ book.title }}.  </a> </li>
     <li> Автор: {{ book.author }}. </li>
-    <li> <a href=" {{ url_for('list_books_by_genre', genre_id=book.genre_id) }} "> Жанр: {{ book.genre_name }}. </a> </li>
+    <li> <a href=" {{ url_for('list_books_by_genre', genre_id=book.genre_id) }} ">
+        Жанр: {{ book.genre_name }}. </a> </li>
     <li> Добавлена: {{ book.date_added }}. </li>
 
     <label class="text"> Прочитана: {% if book.is_read %} Да {% else %} Нет {% endif %} </label>
@@ -19,11 +17,6 @@
     </form>
 </ul>
 <hr>
-{%- endfor %}
 
-<a href=" {{ url_for('add_book') }} "> Добавить книгу  </a>
-<br>
-<a href=" {{ url_for('list_genres') }} "> К списку жанров  </a>
-
-</body>
-</html>
+{% endfor %}
+{% endblock %}

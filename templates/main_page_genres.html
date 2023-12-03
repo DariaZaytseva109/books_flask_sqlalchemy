@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Жанры</title>
-</head>
+{% extends 'base.html' %}
+{% block content %}
 <body>
-<h1> Жанры </h1>
+<h1> {{ title }} </h1>
 {%- for genre in genres %}
 <ul>
     <li> No: {{ genre.genre_id }}. </li>
@@ -14,8 +10,4 @@
 </ul>
 <hr>
 {%- endfor %}
-<a href=" {{ url_for('add_genre') }} "> Добавить жанр  </a>
-<br>
-<a href=" {{ url_for('list_books') }} "> К списку книг  </a>
-</body>
-</html>
+{% endblock %}

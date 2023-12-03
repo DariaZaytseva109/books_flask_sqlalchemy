@@ -17,10 +17,10 @@ with app.app_context():
 
 @app.route(BOOK_API_ROOT, methods=["GET"])
 def list_books():
-    '''view главной страницы приложения, который выводит 15 последних записей из Book в порядке создания - новые записи вверху списка'''
+    '''view главной страницы,
+    который выводит 15 последних записей в порядке создания'''
     books = Book.query.order_by(Book.date_added.desc()).limit(LIMIT).all()
     return render_template('main_page_books.html', books=books)
-
 
 
 @app.route(BOOK_API_ROOT + '/add/', methods=["GET", "POST"])
@@ -31,12 +31,20 @@ def add_book():
         title = request.form['title']
         author = request.form['author']
         genre_id = request.form['genre']
-        new_book = Book(title=title, author=author, genre_id = genre_id)
+        if not title or not author or not genre_id:
+            raise ValueError('Значения не заполнены')
+        new_book = Book(
+            title=title,
+            author=author,
+            genre_id = genre_id
+        )
         db.session.add(new_book)
         db.session.commit()
     genre_list = Genre.query.all()
-    return render_template('add_book.html', genre_list=genre_list)
-
+    return render_template(
+        'add_book.html',
+        genre_list=genre_list
+    )
 
 
 @app.route(BOOK_API_ROOT + '<book_id>/', methods = ['POST', 'GET'])
@@ -49,14 +57,13 @@ def book_page(book_id):
             print(request.form['is_read'])
             print(request.form['save'])
             if request.form['is_read']:
-             book.is_read = True
-             print(book.id, book.is_read)
-        except:
+                book.is_read = True
+                print(book.id, book.is_read)
+        except Exception:
             book.is_read = False
 
         db.session.commit()
     return render_template('book_page.html', book=book)
-
 
 
 @app.route(GENRE_API_ROOT)
@@ -72,17 +79,23 @@ def add_genre():
     if request.method == "POST":
         print(request.form)
         genre = request.form['new_genre']
+        if not genre:
+            raise ValueError('Значения не заполнены')
         new_genre = Genre(genre=genre)
         db.session.add(new_genre)
         db.session.commit()
     return render_template('add_genre.html')
 
+
 @app.route(GENRE_API_ROOT + '/<genre_id>/')
 def list_books_by_genre(genre_id):
     '''список всех книг данного жанра'''
     genre = Genre.query.get_or_404(genre_id)
-    return render_template('genre_page.html', genre_name=genre.genre, books=genre.books_of_genre)
-
+    return render_template(
+        'genre_page.html',
+        genre_name=genre.genre,
+        books=genre.books_of_genre
+    )
 
 
 if __name__ == '__main__':

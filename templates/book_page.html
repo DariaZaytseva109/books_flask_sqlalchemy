@@ -6,7 +6,7 @@
     <li> № {{ book.id }}. </li>
     <li> Название: {{ book.title }}. </li>
     <li> Автор: {{ book.author }}. </li>
-    <li> <a href=" {{ url_for('book_page', book_id=book.book_id) }} "> Жанр: {{ book.genre_name }}. </a> </li>
+    <li> <a href=" {{ url_for('book_page', book_id=book.book_id) }} "> Жанр: {{ book.genre }}. </a> </li>
 
     <input type="checkbox" name="is_read" {% if book.is_read %} checked{% endif %} >
         <label class="text"> Прочитана </label>

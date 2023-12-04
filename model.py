@@ -12,7 +12,6 @@ class User(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, nullable=False)
     username: Mapped[str] = mapped_column(String(30), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(30), unique=True, nullable=False)
-    birth_date: Mapped[datetime] = mapped_column()
     registration_date: Mapped[datetime] = mapped_column(default=date.today())
 
     def __repr__(self):

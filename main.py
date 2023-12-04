@@ -26,10 +26,13 @@ with app.app_context():
     db.create_all()
 
 
+@app.route(API_ROOT + '/main/', methods=["GET"])
+def main():
+    return render_template('main.html')
+
 @app.route(BOOK_API_ROOT, methods=["GET"])
 def list_books():
-    """view главной страницы,
-    который выводит 15 последних записей в порядке создания"""
+    """выводит N последних записей в порядке создания"""
     books = Book.query.order_by(Book.date_added.desc()).limit(LIMIT).all()
     title = 'Книги'
     return render_template('main_page_books.html', books=books, title=title)

@@ -9,16 +9,16 @@
           rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
           crossorigin="anonymous">
 
+{% block content %}
+{% endblock -%}
+
 <a href=" {{ url_for('list_books') }} ">
   <button class="btn btn-secondary rounded-pill px-3" type="button"> К списку книг </button>  </a>
 
 <a href=" {{ url_for('list_genres') }} ">
     <button class="btn btn-secondary rounded-pill px-3" type="button"> К списку жанров </button> </a>
 
-{% block content %}
-{% endblock -%}
-
-    <a href=" {{ url_for('add_book') }} ">
+<a href=" {{ url_for('add_book') }} ">
     <button class="btn btn-secondary rounded-pill px-3" type="button">Добавить книгу</button>
 </a>
     <a href=" {{ url_for('add_genre') }} ">

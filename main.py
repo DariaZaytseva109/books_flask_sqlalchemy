@@ -1,15 +1,17 @@
 from flask_admin import Admin
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_admin.contrib.sqla import ModelView
+from sqlalchemy import create_engine
 
 from model import Book, Genre, db
 
 API_ROOT = ''
 BOOK_API_ROOT = API_ROOT + '/books/'
 GENRE_API_ROOT = API_ROOT + '/genres/'
-LIMIT = 10
+LIMIT = 15
 
 app = Flask(__name__)
+engine = create_engine("sqlite:///instance/project.db")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
 admin = Admin(app, name='База книг', template_mode='bootstrap3')
@@ -51,11 +53,12 @@ def add_book():
         )
         db.session.add(new_book)
         db.session.commit()
+        return redirect(url_for('list_books'))
     genre_list = Genre.query.all()
     return render_template(
-        'add_book.html',
-        genre_list=genre_list,
-        title=title
+    'add_book.html',
+    genre_list=genre_list,
+    title=title
     )
 
 
@@ -99,6 +102,7 @@ def add_genre():
         new_genre = Genre(genre=genre)
         db.session.add(new_genre)
         db.session.commit()
+        return redirect(url_for('list_genres'))
     return render_template('add_genre.html', title=title)
 
 

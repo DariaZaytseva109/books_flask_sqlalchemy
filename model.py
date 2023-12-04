@@ -16,6 +16,7 @@ class Book(db.Model):
     date_added: Mapped[datetime] = mapped_column(default=date.today())
     is_read: Mapped[bool] = mapped_column(default=False)
     genre: Mapped["Genre"] = relationship(back_populates="books_of_genre")
+    rating: Mapped[int] = mapped_column(Integer, nullable=True)
 
     def __repr__(self):
         return f'Название: {self.title}. Автор: {self.author}'

@@ -30,15 +30,15 @@ def add_book():
     title = 'Добавить книгу'
     if request.method == "POST":
         print(request.form)
-        title = request.form['title']
+        book_title = request.form['book_title']
         author = request.form['author']
         genre_id = request.form['genre']
         if not title or not author or not genre_id:
             raise ValueError('Значения не заполнены')
         new_book = Book(
-            title=title,
+            title=book_title,
             author=author,
-            genre_id = genre_id
+            genre_id=genre_id
         )
         db.session.add(new_book)
         db.session.commit()

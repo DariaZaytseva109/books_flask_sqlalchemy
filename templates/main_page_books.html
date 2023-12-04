@@ -9,7 +9,7 @@
     <li> <a href=" {{ url_for('book_page', book_id=book.id) }} "> Название: {{ book.title }}.  </a> </li>
     <li> Автор: {{ book.author }}. </li>
     <li> <a href=" {{ url_for('list_books_by_genre', genre_id=book.genre_id) }} ">
-        Жанр: {{ book.genre_name }}. </a> </li>
+        Жанр: {{ book.genre }}. </a> </li>
     <li> Добавлена: {{ book.date_added }}. </li>
 
     <label class="text"> Прочитана: {% if book.is_read %} Да {% else %} Нет {% endif %} </label>

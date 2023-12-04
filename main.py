@@ -1,14 +1,23 @@
-from datetime import date
+from flask_admin import Admin
 from flask import Flask, render_template, request
+from flask_admin.contrib.sqla import ModelView
+
 from model import Book, Genre, db
 
 API_ROOT = ''
-BOOK_API_ROOT = API_ROOT + '/book/'
-GENRE_API_ROOT = API_ROOT + '/genre/'
+BOOK_API_ROOT = API_ROOT + '/books/'
+GENRE_API_ROOT = API_ROOT + '/genres/'
 LIMIT = 10
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
+admin = Admin(app, name='База книг', template_mode='bootstrap3')
+
+admin.add_view(ModelView(Book, db.session, name="Книги"))
+admin.add_view(ModelView(Genre, db.session, name="Жанры"))
+
+
 db.init_app(app)
 
 with app.app_context():

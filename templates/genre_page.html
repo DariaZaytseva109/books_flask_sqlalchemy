@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title> {{ genre_name }} </title>
-</head>
+{% extends 'base.html' %}
+{% block content %}
 <body>
 
-<h1> Все книги жанра: {{ genre_name }} </h1>
+<h1> {{ title }} </h1>
 {%- for book in books %}
 <ul>
     <li> Название: {{ book.title }}. </li>
@@ -15,9 +11,4 @@
 </ul>
 <hr>
 {%- endfor %}
-<a href=" {{ url_for('list_genres') }} "> К списку жанров  </a>
-<br>
-<a href=" {{ url_for('list_books') }} "> К списку книг  </a>
-</body>
-
-</html>
+{% endblock %}

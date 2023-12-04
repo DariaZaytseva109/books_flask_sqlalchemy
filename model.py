@@ -1,47 +1,30 @@
-from datetime import date
+from datetime import date, datetime
+from typing import List
 
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import relationship
+from sqlalchemy import Integer, String, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 db = SQLAlchemy()
 
 
 class Book(db.Model):
-    id = db.Column(
-        db.Integer,
-        primary_key=True,
-        nullable=False,
-        autoincrement=True
-    )
-    title = db.Column(db.String)
-    author = db.Column(db.String(30))
-    genre_id = db.Column(
-        db.Integer,
-        db.ForeignKey('genre.genre_id', ondelete='SET NULL')
-    )
-    genre_name = relationship(
-        'Genre',
-        back_populates='books_of_genre'
-    )
-    date_added = db.Column(db.Date, default=date.today())
-    is_read = db.Column(db.Boolean, default=False)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, nullable=False)
+    title: Mapped[str] = mapped_column(String(30), unique=True, nullable=False)
+    author: Mapped[str] = mapped_column(String(30))
+    genre_id: Mapped[int] = mapped_column(ForeignKey('genre.genre_id', ondelete='SET NULL'))
+    date_added: Mapped[datetime] = mapped_column(default=date.today())
+    is_read: Mapped[bool] = mapped_column(default=False)
+    genre: Mapped["Genre"] = relationship(back_populates="books_of_genre")
 
     def __repr__(self):
         return f'Название: {self.title}. Автор: {self.author}'
 
 
 class Genre(db.Model):
-    genre_id = db.Column(
-        db.Integer,
-        primary_key=True,
-        nullable=False,
-        autoincrement=True
-    )
-    genre = db.Column(db.String(30), nullable=False)
-    books_of_genre = relationship(
-        'Book',
-        back_populates='genre_name'
-    )
+    genre_id: Mapped[int] = mapped_column(Integer, primary_key=True, nullable=False)
+    genre: Mapped[str] = mapped_column(String(30), unique=True, nullable=False)
+    books_of_genre: Mapped[List["Book"]] = relationship(back_populates="genre")
 
     def __repr__(self):
         return f'{self.genre}'

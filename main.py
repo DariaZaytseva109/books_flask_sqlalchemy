@@ -2,7 +2,7 @@ from datetime import date
 from flask import Flask, render_template, request
 from model import Book, Genre, db
 
-API_ROOT = '/api/v1'
+API_ROOT = ''
 BOOK_API_ROOT = API_ROOT + '/book/'
 GENRE_API_ROOT = API_ROOT + '/genre/'
 LIMIT = 10
@@ -17,8 +17,8 @@ with app.app_context():
 
 @app.route(BOOK_API_ROOT, methods=["GET"])
 def list_books():
-    '''view главной страницы,
-    который выводит 15 последних записей в порядке создания'''
+    """view главной страницы,
+    который выводит 15 последних записей в порядке создания"""
     books = Book.query.order_by(Book.date_added.desc()).limit(LIMIT).all()
     title = 'Книги'
     return render_template('main_page_books.html', books=books, title=title)
@@ -26,8 +26,8 @@ def list_books():
 
 @app.route(BOOK_API_ROOT + '/add/', methods=["GET", "POST"])
 def add_book():
+    """Добавление новой книги"""
     title = 'Добавить книгу'
-    '''Добавление новой книги'''
     if request.method == "POST":
         print(request.form)
         title = request.form['title']
